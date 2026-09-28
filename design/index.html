@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f5f6fa">
+  <title>视频解析工具</title>
+  <link rel="stylesheet" href="style.css?v=4">
+</head>
+<body>
+  <div id="phone" class="phone">
+
+    <!-- 主界面 -->
+    <main class="screen">
+      <div class="blob blob-a"></div>
+      <div class="blob blob-b"></div>
+
+      <section class="hero">
+        <h1 class="title">视频解析工具</h1>
+
+        <div class="input-card" id="input-card">
+          <textarea id="link-input" rows="4" placeholder="粘贴链接..."
+                    autocomplete="off" spellcheck="false" aria-label="视频链接"></textarea>
+          <button id="parse-btn" class="parse-btn" aria-label="解析">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14M13 6l6 6-6 6"/>
+            </svg>
+          </button>
+        </div>
+
+        <p class="support">解析支持</p>
+        <div class="support-apps">
+          <img src="assets/bilibili.png" alt="哔哩哔哩">
+          <img src="assets/douyin.png" alt="抖音">
+        </div>
+      </section>
+
+      <!-- 右下角关于按钮 -->
+      <button id="about-btn" class="about-btn" aria-label="关于">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M12 11.2v5"/>
+          <circle cx="12" cy="7.8" r="0.4" fill="currentColor" stroke="none"/>
+        </svg>
+      </button>
+    </main>
+
+    <!-- 关于弹窗 -->
+    <div id="backdrop" class="backdrop"></div>
+    <section id="about" class="about" role="dialog" aria-label="关于">
+      <p class="about-text">支持一下</p>
+      <img class="qr" src="assets/sponsor.png" alt="赞助二维码">
+    </section>
+
+  </div>
+  <script src="app.js?v=4"></script>
+</body>
+</html>

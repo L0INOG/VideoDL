@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 右下角粉色光斑 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="oval">
+    <gradient
+        android:type="radial"
+        android:gradientRadius="130dp"
+        android:centerX="0.5"
+        android:centerY="0.5"
+        android:centerColor="#24FB7299"
+        android:endColor="#00FB7299" />
+</shape>

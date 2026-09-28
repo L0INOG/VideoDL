@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- UI 设计稿配色（ui/style.css :root） -->
+    <color name="bg">#F5F6FA</color>
+    <color name="card">#FFFFFF</color>
+    <color name="ink">#16171C</color>
+    <color name="ink_2">#3D434E</color>
+    <color name="ink_3">#9AA1AD</color>
+    <color name="line">#E9EBF1</color>
+    <color name="accent">#5F5DF2</color>
+    <color name="accent_2">#8F6BFF</color>
+    <color name="accent_focus">#C9C6FF</color>
+    <color name="placeholder">#A9AEB9</color>
+    <color name="ic_launcher_background">#5F5DF2</color>
+</resources>

@@ -1,0 +1,245 @@
+/* ===== 视频解析工具 · UI 预览 ===== */
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+:root {
+  --bg: #f5f6fa;
+  --card: #ffffff;
+  --ink: #16171c;        /* 主文字 */
+  --ink-2: #3d434e;      /* 暗色提示文字 */
+  --ink-3: #9aa1ad;      /* 次要文字 */
+  --line: #e9ebf1;
+  --accent: #5f5df2;
+  --accent-2: #8f6bff;
+}
+
+html, body { height: 100%; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+               "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  background: #e7e9f0;
+  color: var(--ink);
+}
+
+button { font: inherit; border: 0; background: none; cursor: pointer; color: inherit; }
+
+/* 手机容器：桌面端带深色边框模拟手机，移动端全屏 */
+.phone {
+  position: relative;
+  width: 100%;
+  max-width: 418px;
+  height: 100vh;
+  height: 100dvh;
+  margin: 0 auto;
+  background: var(--bg);
+  overflow: hidden;
+  overflow: clip; /* 光斑装饰不产生可滚动区域，避免整页被横移 */
+}
+
+@media (min-width: 521px) {
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 24px;
+    background: radial-gradient(900px 520px at 12% 0%, #eef0fb 0%, transparent 60%),
+                radial-gradient(820px 520px at 100% 100%, #f4edf7 0%, transparent 55%),
+                #e7e9f0;
+  }
+  .phone {
+    height: min(880px, 92vh);
+    border-radius: 42px;
+    box-shadow: 0 0 0 11px #17181d,
+                0 0 0 12px rgba(255, 255, 255, .07),
+                0 45px 90px -18px rgba(23, 24, 29, .5);
+  }
+}
+
+/* ===== 主界面 ===== */
+.screen {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 32px 28px 96px;
+}
+
+.blob { position: absolute; border-radius: 50%; filter: blur(64px); pointer-events: none; }
+.blob-a { width: 250px; height: 250px; left: -70px; top: -60px;  background: rgba(95, 93, 242, .16); }
+.blob-b { width: 260px; height: 260px; right: -80px; bottom: 130px; background: rgba(251, 114, 153, .14); }
+
+.hero {
+  position: relative;
+  width: 100%;
+  max-width: 332px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  font-size: clamp(27px, 7.4vw, 31px);
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--ink);
+}
+
+/* 多行粘贴框卡片 */
+.input-card {
+  width: 100%;
+  margin-top: 48px; /* 标题相对输入框上移 */
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  box-shadow: 0 14px 34px -14px rgba(23, 24, 29, .14);
+  transition: border-color .2s, box-shadow .2s;
+}
+.input-card:focus-within {
+  border-color: #c9c6ff;
+  box-shadow: 0 14px 34px -14px rgba(95, 93, 242, .38);
+}
+.input-card textarea {
+  display: block;
+  width: 100%;
+  height: 160px; /* 加高，长分享文案完整可见 */
+  padding: 8px 12px 0;
+  border: 0;
+  outline: 0;
+  background: none;
+  resize: none;
+  font: inherit;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--ink);
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.input-card textarea::-webkit-scrollbar { display: none; }
+.input-card textarea::placeholder { color: #a9aeb9; }
+
+.parse-btn {
+  flex-shrink: 0;
+  align-self: flex-end;
+  width: 48px;
+  height: 48px;
+  margin-top: 8px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  box-shadow: 0 10px 22px -8px rgba(95, 93, 242, .6);
+  transition: transform .18s ease, box-shadow .18s;
+}
+.parse-btn:active { transform: scale(.92); }
+.parse-btn svg { width: 21px; height: 21px; }
+
+.support {
+  margin-top: 24px;
+  font-size: 13.5px;
+  font-weight: 500;
+  letter-spacing: .3px;
+  color: var(--ink-2);
+}
+
+/* 官方 App 图标 */
+.support-apps {
+  margin-top: 14px;
+  display: flex;
+  gap: 14px;
+}
+.support-apps img {
+  width: 54px;
+  height: 54px;
+  border-radius: 14px;
+  border: 1px solid rgba(23, 24, 29, .06);
+  box-shadow: 0 12px 24px -12px rgba(23, 24, 29, .35);
+}
+
+/* 右下角关于按钮（透明、很小） */
+.about-btn {
+  position: absolute;
+  right: 24px;
+  bottom: max(26px, env(safe-area-inset-bottom));
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  color: rgba(22, 23, 28, .28);
+  background: transparent;
+  transition: color .2s, transform .18s ease;
+  z-index: 5;
+}
+.about-btn svg { width: 19px; height: 19px; }
+.about-btn:hover { color: rgba(22, 23, 28, .55); }
+.about-btn:active { transform: scale(.9); }
+
+/* ===== 关于弹窗 ===== */
+.backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(17, 19, 26, .42);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s;
+  z-index: 8;
+}
+
+.about {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 9;
+  width: 236px;
+  padding: 26px 22px 24px;
+  background: #fff;
+  border-radius: 26px;
+  box-shadow: 0 24px 60px -18px rgba(17, 19, 26, .35);
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(.9);
+  transition: opacity .26s ease, transform .3s cubic-bezier(.34, 1.4, .64, 1);
+}
+
+.phone.about-open .backdrop { opacity: 1; pointer-events: auto; }
+.phone.about-open .about { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%) scale(1); }
+
+.about-text {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: .5px;
+  color: var(--ink);
+}
+
+.qr {
+  margin-top: 18px;
+  width: 168px;
+  height: auto;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+}
+
+/* 动效 */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-7px); }
+  40% { transform: translateX(7px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+.input-card.shake { animation: shake .4s; }
+
+@keyframes pulse-glow {
+  0%   { box-shadow: 0 0 0 0 rgba(95, 93, 242, .45); }
+  100% { box-shadow: 0 0 0 20px rgba(95, 93, 242, 0); }
+}
+.parse-btn.pulse { animation: pulse-glow .55s ease-out; }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
